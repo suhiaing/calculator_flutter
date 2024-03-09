@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
 
+double result = 0;
+String preResult = '';
+double? num1;
+void addToPreResult() {}
 Widget addingText(String text) {
   return TextButton(
-    onPressed: () {},
+    onPressed: () {
+      preResult += text;
+      print(preResult);
+    },
     child: Text(text),
+  );
+}
+
+Widget addingSignText(String sign) {
+  return TextButton(
+    onPressed: () {
+      try {
+        debugPrint("click to sign");
+        num1 = double.parse(preResult);
+        preResult = '';
+        result = result + num1!;
+        num1;
+        print("this is result $result");
+        print(preResult);
+      } catch (e) {
+        print(e);
+      }
+    },
+    child: Text(sign),
   );
 }
 
@@ -45,12 +71,22 @@ List<Widget> addingSigns() {
   for (int i = 0; i < signs.length; i++) {
     if (i != 3) {
       allSigns.add(
-        addingText(signs[i]),
+        addingSignText(signs[i]),
       );
     } else {
       allSigns.add(
+        //equal function (=)
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            try {
+              result = double.parse(preResult);
+              preResult = result.toString();
+              print(result);
+            } catch (e) {
+              preResult = '';
+              print(e);
+            }
+          },
           child: Text(signs[3]),
         ),
       );
@@ -66,17 +102,26 @@ List<Widget> addingTopBar() {
   for (int i = 0; i < topBar.length; i++) {
     if (i == 0) {
       topBarWidget.add(
-        TextButton(onPressed: () {}, child: const Text('AC')),
+        TextButton(
+            onPressed: () {
+              preResult = '';
+              result = 0;
+            },
+            child: const Text('AC')), //AC
       );
     } else if (i == 1) {
+      //backspace
       topBarWidget.add(
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            preResult = preResult.substring(0, preResult.length - 1);
+            print(preResult);
+          },
           child: topBar[1],
         ),
       );
     } else {
-      topBarWidget.add(addingText(topBar[i]));
+      topBarWidget.add(addingSignText(topBar[i]));
     }
   }
   return topBarWidget;
