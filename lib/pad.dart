@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+Widget addingText(String text) {
+  return TextButton(
+    onPressed: () {},
+    child: Text(text),
+  );
+}
+
 List<List<String>> no = [
   ['7', '8', '9'],
   ['4', '5', '6'],
@@ -24,10 +31,7 @@ List<Widget> addingSubPad(List<String> subPadList) {
   List<Widget> subPads = [];
   for (int i = 0; i < subPadList.length; i++) {
     subPads.add(
-      TextButton(
-        onPressed: () {},
-        child: Text(subPadList[i]),
-      ),
+      addingText(subPadList[i]),
     );
   }
   return subPads;
@@ -41,16 +45,13 @@ List<Widget> addingSigns() {
   for (int i = 0; i < signs.length; i++) {
     if (i != 3) {
       allSigns.add(
-        TextButton(
-          onPressed: () {},
-          child: Text(signs[i]),
-        ),
+        addingText(signs[i]),
       );
     } else {
       allSigns.add(
         TextButton(
           onPressed: () {},
-          child: Text(signs[i]),
+          child: Text(signs[3]),
         ),
       );
     }
@@ -63,20 +64,19 @@ List topBar = ['AC', const Icon(Icons.backspace_outlined), '%', '÷'];
 List<Widget> addingTopBar() {
   List<Widget> topBarWidget = [];
   for (int i = 0; i < topBar.length; i++) {
-    if (i != 1) {
+    if (i == 0) {
       topBarWidget.add(
-        TextButton(
-          onPressed: () {},
-          child: Text(topBar[i]),
-        ),
+        TextButton(onPressed: () {}, child: const Text('AC')),
       );
-    } else {
+    } else if (i == 1) {
       topBarWidget.add(
         TextButton(
           onPressed: () {},
           child: topBar[1],
         ),
       );
+    } else {
+      topBarWidget.add(addingText(topBar[i]));
     }
   }
   return topBarWidget;
