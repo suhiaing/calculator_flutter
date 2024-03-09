@@ -20,9 +20,10 @@ Widget addingSignText(String sign) {
       try {
         debugPrint("click to sign");
         num1 = double.parse(preResult);
-        preResult = '';
         result = result + num1!;
         num1;
+        preResult = '';
+
         print("this is result $result");
         print(preResult);
       } catch (e) {
@@ -79,8 +80,8 @@ List<Widget> addingSigns() {
         TextButton(
           onPressed: () {
             try {
-              result = double.parse(preResult);
-              preResult = result.toString();
+              result = result + num1!;
+
               print(result);
             } catch (e) {
               preResult = '';
