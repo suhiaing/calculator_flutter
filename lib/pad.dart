@@ -1,37 +1,56 @@
 import 'package:flutter/material.dart';
 
+bool initial = true;
 double result = 0;
-String preResult = '';
-double? num1;
-void addToPreResult() {}
+String theInterface = '';
 Widget addingText(String text) {
   return TextButton(
     onPressed: () {
-      preResult += text;
-      print(preResult);
+      theInterface += text;
+      if (initial == true) {
+        result += double.parse(text);
+      }
+      print("Click to $text");
+      print("the interface is $theInterface");
+      initial = false;
     },
     child: Text(text),
   );
 }
 
+double getResult() {
+  return result;
+}
+
+String getTheInterface() {
+  return theInterface;
+}
+
 Widget addingSignText(String sign) {
   return TextButton(
     onPressed: () {
-      try {
-        debugPrint("click to sign");
-        num1 = double.parse(preResult);
-        result = result + num1!;
-        num1;
-        preResult = '';
-
-        print("this is result $result");
-        print(preResult);
-      } catch (e) {
-        print(e);
+      if (initial == false) {
+        if (theInterface[theInterface.length - 1] != '+' &&
+            theInterface[theInterface.length - 1] != '×' &&
+            theInterface[theInterface.length - 1] != '÷') {
+          theInterface += sign;
+          print("clicked $sign");
+        }
       }
     },
     child: Text(sign),
   );
+}
+
+void acFun() {
+  print("AC Clicked");
+  theInterface = '';
+  result = 0;
+}
+
+void backSpaceFun() {
+  theInterface = theInterface.substring(0, theInterface.length - 1);
+  print(theInterface);
 }
 
 List<List<String>> no = [
@@ -80,11 +99,10 @@ List<Widget> addingSigns() {
         TextButton(
           onPressed: () {
             try {
-              result = result + num1!;
-
+              result = double.parse(theInterface);
+              theInterface = result.toString();
               print(result);
             } catch (e) {
-              preResult = '';
               print(e);
             }
           },
@@ -103,21 +121,13 @@ List<Widget> addingTopBar() {
   for (int i = 0; i < topBar.length; i++) {
     if (i == 0) {
       topBarWidget.add(
-        TextButton(
-            onPressed: () {
-              preResult = '';
-              result = 0;
-            },
-            child: const Text('AC')), //AC
+        const TextButton(onPressed: acFun, child: Text('AC')), //AC
       );
     } else if (i == 1) {
       //backspace
       topBarWidget.add(
         TextButton(
-          onPressed: () {
-            preResult = preResult.substring(0, preResult.length - 1);
-            print(preResult);
-          },
+          onPressed: backSpaceFun,
           child: topBar[1],
         ),
       );
